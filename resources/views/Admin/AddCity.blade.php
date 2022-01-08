@@ -14,12 +14,12 @@
         </div>
 
 
-        <form class="forms-sample" method="post" action="" enctype="multipart/form-data">
+        <form class="forms-sample" method="post" action="{{route('city.store')}}" enctype="multipart/form-data">
             @csrf
           <div class="form-group">
             <label for="exampleInputName1">Name</label>
             <input type="text" class="form-control @error('name')
-            @enderror" id="exampleInputName1" placeholder="Name" name="name" >
+            @enderror" id="exampleInputName1" placeholder="Name" name="name" value="">
             <br>
             @error('name')
             <div style="color:red;">{{ $message }}</div>

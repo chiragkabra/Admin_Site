@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\State;
 
 class StateController extends Controller
 {
@@ -13,7 +14,8 @@ class StateController extends Controller
      */
     public function index()
     {
-        return view('Admin.ViewState');
+        $state=State::all();
+        return view('Admin.ViewState',compact('state'));
     }
 
     /**
@@ -32,9 +34,19 @@ class StateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        $state = new State();
+        if($req->input('submit'))
+        {
+            $req->validate([
+                'name'=>'required|alpha|unique:states,state_name'
+            ]);
+
+            $state->state_name=$req->input('name');
+            $state->save();
+            return redirect()->route('state.index')->with('success','State inserted');;
+        }
     }
 
     /**
@@ -79,6 +91,7 @@ class StateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        State::find($id)->delete();
+        return redirect()->route('state.index')->with('delete','state deleted');
     }
 }

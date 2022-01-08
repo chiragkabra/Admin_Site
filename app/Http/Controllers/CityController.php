@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\City;
+
 
 class CityController extends Controller
 {
@@ -13,7 +15,8 @@ class CityController extends Controller
      */
     public function index()
     {
-        return view('Admin.ViewCity');
+        $city=City::all();
+        return view('Admin.ViewCity',compact('city'));
     }
 
     /**
@@ -32,9 +35,20 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+
+        $city = new City();
+        if($req->input('submit'))
+        {
+            $req->validate([
+                'name'=>'required|alpha|unique:cities,city_name'
+            ]);
+
+            $city->city_name=$req->input('name');
+            $city->save();
+            return redirect()->route('city.index')->with('success','city inserted');
+        }
     }
 
     /**
@@ -56,7 +70,8 @@ class CityController extends Controller
      */
     public function edit($id)
     {
-        //
+        $eid=City::find($id);
+        return view('Admin.AddCity',compact('eid'));
     }
 
     /**
@@ -79,6 +94,7 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        City::find($id)->delete();
+        return redirect()->route('city.index')->with('delete','City deleted');
     }
 }

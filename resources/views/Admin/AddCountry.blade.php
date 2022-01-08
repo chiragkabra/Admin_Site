@@ -14,7 +14,7 @@
         </div>
 
 
-        <form class="forms-sample" method="post" action="" enctype="multipart/form-data">
+        <form class="forms-sample" method="post" action="{{route('country.store')}}" enctype="multipart/form-data">
             @csrf
           <div class="form-group">
             <label for="exampleInputName1">Name</label>
