@@ -6,7 +6,7 @@
 
         <div class="row">
             <div class="col">
-        <h4 class="card-title">Add City</h4>
+        <h4 class="card-title">@if($city) Update City @else Add City @endif</h4>
             </div>
             {{-- <a href="{{route('staff.create')}}"> --}}
         {{-- <input type="submit" class="btn btn-primary mr-2 float-right" value="view detail" name="view_detail"> --}}
@@ -19,7 +19,7 @@
           <div class="form-group">
             <label for="exampleInputName1">Name</label>
             <input type="text" class="form-control @error('name')
-            @enderror" id="exampleInputName1" placeholder="Name" name="name" value="">
+            @enderror" id="exampleInputName1" placeholder="Name" name="name" value="{{$city->city_name}}">
             <br>
             @error('name')
             <div style="color:red;">{{ $message }}</div>

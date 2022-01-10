@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,3 +24,4 @@ Route::resource('admin',AdminController::class);
 Route::resource('city',CityController::class);
 Route::resource('state',StateController::class);
 Route::resource('country',CountryController::class);
+Route::resource('login',LoginController::class);

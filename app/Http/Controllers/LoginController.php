@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\City;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-
-class CityController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        $city=City::all();
-        return view('Admin.ViewCity',compact('city'));
+        return view('Admin.login');
     }
 
     /**
@@ -26,7 +25,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        return view('Admin.AddCity');
+        //
     }
 
     /**
@@ -38,16 +37,39 @@ class CityController extends Controller
     public function store(Request $req)
     {
 
-        $city = new City();
         if($req->input('submit'))
         {
-            $req->validate([
-                'name'=>'required|alpha|unique:cities,city_name'
-            ]);
+            // $req->validate([
+            //     'email'=>'required|ends_with:@gmail.com,@yahoo.com',
+            //     'password'=>'required',
+            // ]);
+            $email=$req->input('email');
+            $password=$req->input('password');
+            $log=User::where('email',$email)->first();
+            if(!empty($log))
+                {
+                //     if(Hash::check($password, $log->password))
+                // {
 
-            $city->city_name=$req->input('name');
-            $city->save();
-            return redirect()->route('city.index')->with('success','city inserted');
+
+                    if($log->role_id==1)
+                    {
+                         $req->session()->put('admin',$log);
+                         return redirect()->route('admin.index');
+                    }
+
+                }
+                // else
+                // {
+                //     return redirect()->route('login.index')->with('error','passwords does not match');
+                // }
+            //}
+                else
+                {
+                    return redirect()->route('login.index')->with('error','User does not exists');
+
+                }
+
         }
     }
 
@@ -70,8 +92,7 @@ class CityController extends Controller
      */
     public function edit($id)
     {
-           $city=City::find($id);
-         return view('Admin.AddCity',compact('city'));
+        //
     }
 
     /**
@@ -81,19 +102,9 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req, $id)
+    public function update(Request $request, $id)
     {
-        $city = new City();
-        if($req->input('submit'))
-        {
-            $req->validate([
-                'name'=>'required|alpha|unique:cities,city_name'
-            ]);
-
-            $city->city_name=$req->input('name');
-            $city->update();
-            return redirect()->route('city.index')->with('success','city updated');
-        }
+        //
     }
 
     /**
@@ -104,7 +115,6 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        City::find($id)->delete();
-        return redirect()->route('city.index')->with('delete','City deleted');
+        //
     }
 }
