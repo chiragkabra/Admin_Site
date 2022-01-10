@@ -98,14 +98,16 @@
               <img src="{{asset('admin_asset/images/faces/face28.jpg')}}" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                @if(Session::has('admin'))
+                <?php $s=Session::get('admin')?>
 
               <a class="dropdown-item">
                 <i class="icon-head menu-icon text-primary"></i>
-                {{-- Welcome {{$s->name}} --}}
-                Admin
+                Welcome {{$s->name}}
               </a>
+              @endif
 
-              <a class="dropdown-item" href="">
+              <a class="dropdown-item" href="{{route('login.create')}}">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>

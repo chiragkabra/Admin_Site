@@ -23,9 +23,13 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $req)
     {
-        //
+        if($req->session()->has('admin'))
+        {
+            $req->session()->forget('admin');
+            return redirect()->route('login.index');
+        }
     }
 
     /**
@@ -113,8 +117,9 @@ class LoginController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( Request $req,$id)
     {
-        //
+
+
     }
 }

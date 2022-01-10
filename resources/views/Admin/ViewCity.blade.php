@@ -42,6 +42,7 @@
               <td>
                {{$city->city_name}}
               </td>
+              @role('admin')
                 <td>
                     <a href="{{route('city.edit',$city->id)}}">
                     <input type="submit" class="btn btn-primary" value="edit"  name="Edit">
@@ -77,6 +78,7 @@
                     </form>
 
                 </td>
+                @endrole
             </tr>
           </tbody>
 
