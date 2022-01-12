@@ -175,6 +175,20 @@
               </ul>
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+             <i class="icon-columns menu-icon"></i>
+             <span class="menu-title">Manage Permission</span>
+             <i class="menu-arrow"></i>
+           </a>
+           <div class="collapse" id="tables">
+             <ul class="nav flex-column sub-menu">
+               {{-- <li class="nav-item"><a class="nav-link" href="{{route('country.create')}}">Add Country</a></li> --}}
+               <li class="nav-item"><a class="nav-link" href="{{route('permission.index')}}">View  Permission</a></li>
+
+             </ul>
+           </div>
+       </li>
             <li class="nav-item">
                 <a class="nav-link" href="">
                   <i class="ti-power-off menu-icon"></i>

@@ -6,20 +6,22 @@
       <div class="card-body">
           <div class="row">
               <div class="col">
-        <h4 class="card-title">View City Details</h4>
+        <h4 class="card-title">View Permission Details</h4>
               </div>
-              <a href="{{route('city.create')}}">
+              <a href="{{route('permission.create')}}">
                 <input type="submit" class="btn btn-primary mr-2 float-right" value="Add" name="Add">
                     </a>
+
     </div>
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+        {{Session::get('success')}}
+    </div>
+    @endif
     @if(Session::has('delete'))
     <div class="alert alert-danger">
         {{Session::get('delete')}}
     </div>
-    @endif
-    @if(Session::has('admin'))
-    <?php $s=Session::get('admin')?>
-    {{-- Welcome {{$s->role->permission}} --}}
     @endif
     <div class="table-responsive">
         <table class="table table-striped">
@@ -37,31 +39,27 @@
             </tr>
           </thead>
 
-          @foreach ($city as $city )
+          @foreach ($per as $per )
           <tbody>
             <tr>
               <td>
-                {{$city->id}}
+                {{$per->id}}
               </td>
               <td>
-               {{$city->city_name}}
+               {{$per->role->name}}
               </td>
-
                 <td>
-                    @if(isset($s->role->permission['name']['city']['can-edit']))
-                    <a href="{{route('city.edit',$city->id)}}">
+                    <a href="{{route('permission.edit',$per->id)}}">
                     <input type="submit" class="btn btn-primary" value="edit"  name="Edit">
                     </a>
-                    @endif
 
-                    @if(isset($s->role->permission['name']['city']['can-delete']))
-                    <input type="submit" class="btn btn-danger" value="Delete"  name="Delete" data-toggle="modal" data-target="#exampleModal" data-id='{{$city->id}}'>
-                    @endif
+                     <input type="submit" class="btn btn-danger" value="Delete"  name="Delete" data-toggle="modal" data-target="#exampleModal{{$per->id}}" data-id='{{$per->id}}'>
+
                     <!-- Modal -->
-                    <form method="post" action="{{route('city.destroy',$city->id)}}">
+                    <form method="post" action="{{route('permission.destroy',$per->id)}}">
                         @csrf
                         {{method_field('delete')}}
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal{{$per->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -72,8 +70,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>
-                                    <h4>Are you sure u want to delete the entry</h4>
-                                        <h4>with name:{{$city->city_name}}</h4>
+                                    <h4>Are you sure u want to delete the permission</h4>
+                                        <h4>with name:{{$per->role->name}}</h4>
                                     </p>
                                 </div>
                                 <div class="modal-footer">
@@ -86,7 +84,6 @@
                     </form>
 
                 </td>
-
             </tr>
           </tbody>
 
@@ -97,6 +94,7 @@
 
       </div>
     </div>
-  </div>
+      </div>
+
 @endsection
 

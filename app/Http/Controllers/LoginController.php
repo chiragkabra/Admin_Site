@@ -25,11 +25,9 @@ class LoginController extends Controller
      */
     public function create(Request $req)
     {
-        if($req->session()->has('admin'))
-        {
+
             $req->session()->forget('admin');
             return redirect()->route('login.index');
-        }
     }
 
     /**
@@ -60,6 +58,11 @@ class LoginController extends Controller
                     {
                          $req->session()->put('admin',$log);
                          return redirect()->route('admin.index');
+                    }
+                    if($log->role_id==2)
+                    {
+                        $req->session()->put('admin',$log);
+                        return redirect()->route('admin.index');
                     }
 
                 }

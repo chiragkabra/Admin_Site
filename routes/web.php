@@ -6,6 +6,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LoginController;
+use  App\Http\Controllers\PermissionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +26,9 @@ Route::resource('city',CityController::class);
 Route::resource('state',StateController::class);
 Route::resource('country',CountryController::class);
 Route::resource('login',LoginController::class);
+Route::resource('permission',PermissionController::class);
+
+Route::group(['middleware'=>['auth'=>'has.permission']],function(){
+
+
+});
